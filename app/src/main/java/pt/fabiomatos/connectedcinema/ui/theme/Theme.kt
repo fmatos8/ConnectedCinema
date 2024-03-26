@@ -18,12 +18,13 @@ import androidx.core.view.WindowCompat
 private val DarkColorScheme = darkColorScheme(
     primary = ConnectedCinemaColor.Black,
     secondary = ConnectedCinemaColor.White,
-    tertiary = ConnectedCinemaColor.Yellow
+    tertiary = ConnectedCinemaColor.Yellow,
+    background = ConnectedCinemaColor.White,
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = ConnectedCinemaColor.Black,
-    secondary = ConnectedCinemaColor.White,
+    primary = ConnectedCinemaColor.White,
+    secondary = ConnectedCinemaColor.Black,
     tertiary = ConnectedCinemaColor.Yellow,
     background = ConnectedCinemaColor.Black,
 
