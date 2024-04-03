@@ -15,14 +15,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-private val DarkColorScheme = darkColorScheme(
+private val LightColorScheme = darkColorScheme(
     primary = ConnectedCinemaColor.Black,
     secondary = ConnectedCinemaColor.White,
     tertiary = ConnectedCinemaColor.Yellow,
     background = ConnectedCinemaColor.White,
 )
 
-private val LightColorScheme = lightColorScheme(
+private val DarkColorScheme = lightColorScheme(
     primary = ConnectedCinemaColor.White,
     secondary = ConnectedCinemaColor.Black,
     tertiary = ConnectedCinemaColor.Yellow,
