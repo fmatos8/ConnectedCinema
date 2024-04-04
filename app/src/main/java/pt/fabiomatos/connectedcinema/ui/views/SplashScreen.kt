@@ -7,18 +7,25 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.delay
 import pt.fabiomatos.connectedcinema.R
+import pt.fabiomatos.connectedcinema.ui.navigation.Login
 
 @Composable
-fun ConnectedCinemaApp(
+fun SplashScreen(
     navController: NavHostController = rememberNavController()
 ) {
+    LaunchedEffect(key1 = true, block = {
+        delay(5000)
+        navController.navigate(Login.route)
+    })
     // A surface container using the 'background' color from the theme
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -26,7 +33,8 @@ fun ConnectedCinemaApp(
     ) {
         Column {
             Image(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
                     .padding(start = 40.dp, end = 40.dp),
                 painter = painterResource(id = R.drawable.logo_transparent),
                 contentDescription = "Logo"
@@ -38,5 +46,5 @@ fun ConnectedCinemaApp(
 @Preview
 @Composable
 fun SplashScreenComposePreview(){
-    ConnectedCinemaApp()
+    SplashScreen()
 }
