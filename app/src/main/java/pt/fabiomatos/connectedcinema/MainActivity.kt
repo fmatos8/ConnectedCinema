@@ -14,9 +14,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import pt.fabiomatos.connectedcinema.ui.navigation.Homepage
 import pt.fabiomatos.connectedcinema.ui.navigation.Login
 import pt.fabiomatos.connectedcinema.ui.navigation.SplashScreen
 import pt.fabiomatos.connectedcinema.ui.theme.ConnectedCinemaTheme
+import pt.fabiomatos.connectedcinema.ui.views.Homepage
 import pt.fabiomatos.connectedcinema.ui.views.LoginScreen
 import pt.fabiomatos.connectedcinema.ui.views.SplashScreen
 
@@ -42,8 +44,8 @@ fun MyNavigation(){
         composable(Login.route){
             LoginScreen(navController)
         }
-        composable(Login.route){
-            Hom()
+        composable(Homepage.route){
+            Homepage()
         }
     }
 }

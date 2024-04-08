@@ -49,10 +49,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import pt.fabiomatos.connectedcinema.R
 import pt.fabiomatos.connectedcinema.data.DataSource
+import pt.fabiomatos.connectedcinema.ui.navigation.Login
+import pt.fabiomatos.connectedcinema.ui.navigation.Homepage
 import pt.fabiomatos.connectedcinema.ui.theme.ConnectedCinemaTheme
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    navController: NavHostController = rememberNavController()
+) {
 
     var email by rememberSaveable {
         mutableStateOf("")
@@ -181,7 +185,9 @@ fun LoginScreen() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(45.dp),
-                        onClick = { /*TODO*/ },
+                        onClick = {
+                            navController.navigate(Homepage.route)
+                        },
                         shape = RoundedCornerShape(25),
                         colors = ButtonDefaults.buttonColors(
                             contentColor = MaterialTheme.colorScheme.secondary
