@@ -14,4 +14,7 @@
     <string name="hide_password">Esconder password</string>
     <string name="show_password">Mostrar password</string>
     <string name="forget_password">Esqueceu a password?</string>
+    <string name="i_understand">OK, percebi</string>
+
+    <string name="welcome_text">Observe que você não pode assistir, transmitir ou baixar programas e filmes com este aplicativo.\n\nUse aplicativos de streaming para transmitir e assistir conteúdo</string>
 </resources>

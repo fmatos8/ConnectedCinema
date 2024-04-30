@@ -1,17 +1,19 @@
 package pt.fabiomatos.connectedcinema.ui.navigation
 
-interface Destinations {
-    val route: String
-}
+import pt.fabiomatos.connectedcinema.interfaces.IDestinations
 
-object SplashScreen: Destinations {
+object SplashScreen: IDestinations {
     override val route = "SplashScreen"
 }
 
-object Login: Destinations {
+object Welcome: IDestinations {
+    override val route = "Welcome"
+}
+
+object Login: IDestinations {
     override val route = "Login"
 }
 
-object Homepage: Destinations {
+object Homepage: IDestinations {
     override val route = "Homepage"
 }

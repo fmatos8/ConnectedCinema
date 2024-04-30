@@ -1,6 +1,7 @@
 package pt.fabiomatos.connectedcinema.ui.views
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -161,8 +162,3 @@ fun BottomNavigationBar(navController: NavController) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun BottomNavigationBarPreview() {
-    //BottomNavigationBar()
-}

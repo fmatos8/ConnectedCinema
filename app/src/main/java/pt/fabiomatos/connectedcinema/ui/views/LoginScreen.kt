@@ -27,9 +27,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -61,7 +65,6 @@ fun LoginScreen(
     var email by rememberSaveable {
         mutableStateOf("")
     }
-
     var password by rememberSaveable { mutableStateOf("") }
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
@@ -81,7 +84,7 @@ fun LoginScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 20.dp, bottom = 20.dp)
-                        .size(105.dp),
+                        .size(100.dp),
                     alignment = Alignment.TopCenter,
                     painter = painterResource(id = R.drawable.logo_slogan_transparent),
                     contentDescription = "Logo"
@@ -90,11 +93,11 @@ fun LoginScreen(
                 Column (
                     Modifier
                         .fillMaxWidth()
-                        .padding(start = 40.dp, end = 40.dp),
+                        .padding(start = 20.dp, end = 20.dp),
                     verticalArrangement = Arrangement.Center
                 ) {
 
-                    OutlinedTextField(
+                    TextField(
                         modifier = Modifier
                             .fillMaxWidth(),
                         value = email,
@@ -117,12 +120,20 @@ fun LoginScreen(
                                 text = stringResource(id = R.string.email_label)
                             )
                         },
-                        textStyle = TextStyle(color = MaterialTheme.colorScheme.primary)
+                        textStyle = TextStyle(color = MaterialTheme.colorScheme.primary),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                        colors = TextFieldDefaults.colors(
+                            unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                            cursorColor = MaterialTheme.colorScheme.secondary,
+                            focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                            focusedPlaceholderColor = MaterialTheme.colorScheme.secondary,
+                            unfocusedPlaceholderColor = MaterialTheme.colorScheme.secondary,
+                        )
                     )
 
                     Spacer(modifier = Modifier.size(10.dp))
 
-                    OutlinedTextField(
+                    TextField(
                         modifier = Modifier
                             .fillMaxWidth()
                             .background(Color.Transparent),
@@ -169,8 +180,17 @@ fun LoginScreen(
                             IconButton(onClick = { passwordVisible = !passwordVisible }) {
                                 Icon(imageVector = image, description)
                             }
-                        }
+                        },
+                        colors = TextFieldDefaults.colors(
+                            unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                            cursorColor = MaterialTheme.colorScheme.secondary,
+                            focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                            focusedPlaceholderColor = MaterialTheme.colorScheme.secondary,
+                            unfocusedPlaceholderColor = MaterialTheme.colorScheme.secondary,
+                        )
                     )
+
+
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.End,
@@ -186,7 +206,12 @@ fun LoginScreen(
                             .fillMaxWidth()
                             .height(45.dp),
                         onClick = {
-                            navController.navigate(Homepage.route)
+                            navController.navigate(Homepage.route) {
+                                popUpTo(Login.route) {
+                                    inclusive = true
+                                    saveState = true
+                                }
+                            }
                         },
                         shape = RoundedCornerShape(25),
                         colors = ButtonDefaults.buttonColors(
@@ -201,6 +226,7 @@ fun LoginScreen(
                     }
                 }
                 Column (
+                    modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -211,7 +237,7 @@ fun LoginScreen(
                     ) {
                         Divider(
                             modifier = Modifier
-                                .fillMaxWidth(0.25f)
+                                .fillMaxWidth(0.3f)
                                 .align(Alignment.CenterVertically),
                             color = Color.White,
                             thickness = 2.dp
@@ -221,7 +247,7 @@ fun LoginScreen(
                         )
                         Divider(
                             modifier = Modifier
-                                .fillMaxWidth(0.35f)
+                                .fillMaxWidth(0.45f)
                                 .align(Alignment.CenterVertically),
                             color = Color.White,
                             thickness = 2.dp

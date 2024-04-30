@@ -17,6 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
 import pt.fabiomatos.connectedcinema.R
 import pt.fabiomatos.connectedcinema.ui.navigation.Login
+import pt.fabiomatos.connectedcinema.ui.navigation.SplashScreen
 
 @Composable
 fun SplashScreen(
@@ -24,7 +25,12 @@ fun SplashScreen(
 ) {
     LaunchedEffect(key1 = true, block = {
         delay(5000)
-        navController.navigate(Login.route)
+        navController.navigate(Login.route) {
+            popUpTo(SplashScreen.route) {
+                inclusive = true
+                saveState = true
+            }
+        }
     })
     // A surface container using the 'background' color from the theme
     Surface(
