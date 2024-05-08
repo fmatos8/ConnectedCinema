@@ -11,10 +11,12 @@ import androidx.navigation.compose.rememberNavController
 import pt.fabiomatos.connectedcinema.ui.navigation.Homepage
 import pt.fabiomatos.connectedcinema.ui.navigation.Login
 import pt.fabiomatos.connectedcinema.ui.navigation.SplashScreen
+import pt.fabiomatos.connectedcinema.ui.navigation.Welcome
 import pt.fabiomatos.connectedcinema.ui.theme.ConnectedCinemaTheme
 import pt.fabiomatos.connectedcinema.ui.views.Homepage
 import pt.fabiomatos.connectedcinema.ui.views.LoginScreen
 import pt.fabiomatos.connectedcinema.ui.views.SplashScreen
+import pt.fabiomatos.connectedcinema.ui.views.WelcomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +36,9 @@ fun MyNavigation(){
     NavHost(navController = navController, startDestination = SplashScreen.route) {
         composable(SplashScreen.route){
             SplashScreen(navController)
+        }
+        composable(Welcome.route){
+            WelcomeScreen(navController)
         }
         composable(Login.route){
             LoginScreen(navController)

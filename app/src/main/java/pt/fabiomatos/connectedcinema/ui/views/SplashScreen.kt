@@ -18,14 +18,15 @@ import kotlinx.coroutines.delay
 import pt.fabiomatos.connectedcinema.R
 import pt.fabiomatos.connectedcinema.ui.navigation.Login
 import pt.fabiomatos.connectedcinema.ui.navigation.SplashScreen
+import pt.fabiomatos.connectedcinema.ui.navigation.Welcome
 
 @Composable
 fun SplashScreen(
     navController: NavHostController = rememberNavController()
 ) {
     LaunchedEffect(key1 = true, block = {
-        delay(5000)
-        navController.navigate(Login.route) {
+        delay(3000)
+        navController.navigate(Welcome.route) {
             popUpTo(SplashScreen.route) {
                 inclusive = true
                 saveState = true
