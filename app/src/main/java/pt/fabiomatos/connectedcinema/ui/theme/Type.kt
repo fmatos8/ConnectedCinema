@@ -35,13 +35,25 @@ val Typography = Typography(
     headlineLarge= TextStyle(fontFamily = RobotoCondensed),
     headlineMedium= TextStyle(fontFamily = RobotoCondensed),
     headlineSmall= TextStyle(fontFamily = RobotoCondensed),
-    titleLarge= TextStyle(fontFamily = RobotoCondensed),
+    titleLarge= TextStyle(
+        fontFamily = RobotoCondensed,
+        fontWeight = FontWeight.Bold,
+        fontSize = 22.sp
+    ),
     titleMedium= TextStyle(fontFamily = RobotoCondensed),
     titleSmall= TextStyle(fontFamily = RobotoCondensed),
     bodyMedium= TextStyle(fontFamily = RobotoCondensed),
     bodySmall= TextStyle(fontFamily = RobotoCondensed),
     labelLarge= TextStyle(fontFamily = RobotoCondensed),
-    labelMedium= TextStyle(fontFamily = RobotoCondensed),
-    labelSmall= TextStyle(fontFamily = RobotoCondensed),
+    labelMedium= TextStyle(
+        fontFamily = RobotoCondensed,
+        fontWeight = FontWeight.Bold,
+        fontSize = 18.sp
+    ),
+    labelSmall= TextStyle(
+        fontFamily = RobotoCondensed,
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp
+    )
 
 )

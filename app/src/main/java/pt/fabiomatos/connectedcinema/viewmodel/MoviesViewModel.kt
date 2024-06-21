@@ -16,12 +16,27 @@ import retrofit2.Response
 class MoviesViewModel : ViewModel() {
 
     private val repository = MovieRepository()
+
     private val _upcoming = MutableLiveData<List<Results>>()
+    private val _trending = MutableLiveData<List<Results>>()
 
     val upcoming: LiveData<List<Results>> get() = _upcoming
+    val trending: LiveData<List<Results>> get() = _trending
 
     init {
+        fetchTrending()
         fetchUpcoming()
+    }
+
+    private fun fetchTrending() {
+        viewModelScope.launch {
+            try {
+                val response = repository.getTrending()
+                _trending.value = response.results
+            } catch (e: Exception) {
+                Log.e("ERRO FETCH", e.toString())
+            }
+        }
     }
 
     private fun fetchUpcoming() {

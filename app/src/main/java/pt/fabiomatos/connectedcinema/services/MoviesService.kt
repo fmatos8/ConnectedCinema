@@ -8,4 +8,7 @@ interface MoviesService {
 
     @GET("movie/upcoming")
     suspend fun getUpcoming(): ApiResponse
+
+    @GET("trending/all/week")
+    suspend fun getTrending(): ApiResponse
 }
