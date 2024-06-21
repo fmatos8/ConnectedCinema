@@ -28,6 +28,10 @@ data class Results(
     var originalLanguage: String? = null,
     @SerializedName("original_title")
     var originalTitle: String? = null,
+    @SerializedName("name")
+    var name: String? = null,
+    @SerializedName("original_name")
+    var originalName: String? = null,
     @SerializedName("overview")
     var overview: String? = null,
     @SerializedName("popularity")
