@@ -40,6 +40,8 @@ data class Results(
     var posterPath: String? = null,
     @SerializedName("release_date")
     var releaseDate: String? = null,
+    @SerializedName("first_air_date")
+    var firstAirDate: String? = null,
     @SerializedName("title")
     var title: String? = null,
     @SerializedName("video")

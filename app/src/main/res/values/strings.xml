@@ -17,4 +17,6 @@
 
     <string name="welcome_text">Please note that you can´t watch, stream or download shows and movies with this app.\n\nUse streaming apps to stream and watch content</string>
 
+    <string name="upcoming">Upcoming</string>
+    <string name="top_rated">Top Rated</string>
 </resources>

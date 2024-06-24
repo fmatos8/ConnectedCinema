@@ -2,9 +2,11 @@ package pt.fabiomatos.connectedcinema.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
+import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -33,7 +35,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyNavigation(){
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Homepage.route) {
+    NavHost(navController = navController, startDestination = SplashScreen.route) {
         composable(SplashScreen.route){
             SplashScreen(navController)
         }

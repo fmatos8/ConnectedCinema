@@ -19,13 +19,17 @@ class MoviesViewModel : ViewModel() {
 
     private val _upcoming = MutableLiveData<List<Results>>()
     private val _trending = MutableLiveData<List<Results>>()
+    private val _toprated = MutableLiveData<List<Results>>()
+
 
     val upcoming: LiveData<List<Results>> get() = _upcoming
     val trending: LiveData<List<Results>> get() = _trending
+    val toprated: LiveData<List<Results>> get() = _toprated
 
     init {
         fetchTrending()
         fetchUpcoming()
+        fetchTopRated()
     }
 
     private fun fetchTrending() {
@@ -44,6 +48,17 @@ class MoviesViewModel : ViewModel() {
             try {
                 val response = repository.getUpcoming()
                 _upcoming.value = response.results
+            } catch (e: Exception) {
+                Log.e("ERRO FETCH", e.toString())
+            }
+        }
+    }
+
+    private fun fetchTopRated() {
+        viewModelScope.launch {
+            try {
+                val response = repository.getTopRated()
+                _toprated.value = response.results
             } catch (e: Exception) {
                 Log.e("ERRO FETCH", e.toString())
             }

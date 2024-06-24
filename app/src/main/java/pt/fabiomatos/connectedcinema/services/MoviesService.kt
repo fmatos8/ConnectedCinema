@@ -11,4 +11,7 @@ interface MoviesService {
 
     @GET("trending/all/week")
     suspend fun getTrending(): ApiResponse
+
+    @GET("movie/top_rated")
+    suspend fun getTopRated(): ApiResponse
 }

@@ -13,4 +13,8 @@ class MovieRepository {
     suspend fun getTrending(): ApiResponse {
         return api.getTrending()
     }
+
+    suspend fun getTopRated(): ApiResponse {
+        return api.getTopRated()
+    }
 }

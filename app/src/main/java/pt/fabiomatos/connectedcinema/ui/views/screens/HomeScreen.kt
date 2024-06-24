@@ -1,34 +1,34 @@
 package pt.fabiomatos.connectedcinema.ui.views.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.filled.ArrowForwardIos
-import androidx.compose.material3.Card
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -36,39 +36,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.AbsoluteAlignment
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import pt.fabiomatos.connectedcinema.R
 import pt.fabiomatos.connectedcinema.models.Results
-import pt.fabiomatos.connectedcinema.ui.navigation.Login
-import pt.fabiomatos.connectedcinema.ui.navigation.WelcomeItem
 import pt.fabiomatos.connectedcinema.ui.theme.ConnectedCinemaTheme
+import pt.fabiomatos.connectedcinema.ui.views.Homepage
 import pt.fabiomatos.connectedcinema.utils.Utils
 import pt.fabiomatos.connectedcinema.viewmodel.MoviesViewModel
 
@@ -77,15 +66,22 @@ fun HomeScreen(viewModel: MoviesViewModel = viewModel()) {
 
     val trending by viewModel.trending.observeAsState(initial = emptyList())
     val upcoming by viewModel.upcoming.observeAsState(initial = emptyList())
+    val toprated by viewModel.toprated.observeAsState(initial = emptyList())
+
+    val scrollState = rememberScrollState()
 
     ConnectedCinemaTheme {
         Surface (
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            Column {
+            Column (
+                modifier = Modifier
+                    .verticalScroll(state = scrollState)
+            ) {
                 TrendingList(trending.take(n = 5))
-                UpcomingList(upcoming)
+                HomepageHorizontalList(upcoming, stringResource(id = R.string.upcoming))
+                HomepageHorizontalList(toprated, stringResource(id = R.string.top_rated))
             }
         }
     }
@@ -101,20 +97,39 @@ fun TrendingList(items: List<Results>) {
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-fun UpcomingList(items: List<Results>) {
+fun HomepageHorizontalList(items: List<Results>, label: String) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
 
     ) {
-        Text(
-            text = "Upcoming",
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary,
+        Row (
             modifier = Modifier
-                .padding(start = 16.dp, top = 20.dp, bottom = 5.dp)
-                .background(Color.Transparent), // Background color to show the shadow clearly
+                .fillMaxWidth()
+                .padding(top = 20.dp, bottom = 5.dp),
+            verticalAlignment = Alignment.CenterVertically
         )
+        {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .background(Color.Transparent)
+                    .weight(1f)
+            )
+            Text(
+                text = "View all",
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .padding(end = 16.dp)
+                    .background(Color.Transparent),
+                textAlign = TextAlign.End
+            )
+        }
         LazyRow (
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -192,12 +207,13 @@ fun ImageItem(item: Results) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(300.dp)
+                .clip(RoundedCornerShape(bottomEnd = 16.dp, bottomStart = 16.dp))
         )
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .size(300.dp)
-                .clip(RoundedCornerShape(16.dp))
+                .clip(RoundedCornerShape(bottomEnd = 16.dp, bottomStart = 16.dp))
                 .background(
                     brush = Brush.verticalGradient(
                         colors = listOf(
@@ -210,16 +226,48 @@ fun ImageItem(item: Results) {
                 ),
             contentAlignment = Alignment.BottomStart
         ) {
-            Text(
-                text = item.title ?: item.name.toString(),
-                fontWeight = FontWeight.Bold,
-                fontSize = 26.sp,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier
-                    .padding(start = 16.dp, bottom = 80.dp)
-                    .background(Color.Transparent), // Background color to show the shadow clearly
-            )
+            Column(
+                modifier = Modifier.padding(bottom = 80.dp)
+            ) {
+                Text(
+                    text = item.title ?: item.name.toString(),
+                    style = MaterialTheme.typography.titleLarge,
+                    color = Color.White,
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                        .background(Color.Transparent), // Background color to show the shadow clearly
+                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .padding(top = 5.dp)
+                ) {
+                    val data = item.releaseDate ?: item.firstAirDate.toString()
+                    Text(
+                        text = Utils.convertStringDateToYear(data),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Color.White,
+                        modifier = Modifier
+                            .padding(start = 16.dp)
+                            .background(Color.Transparent), // Background color to show the shadow clearly
+                    )
 
+                    Icon(
+                        Icons.Filled.Star,
+                        tint = MaterialTheme.colorScheme.tertiary,
+                        contentDescription = "Email",
+                        modifier = Modifier.padding(start = 16.dp)
+                    )
+                    Text(
+                        text = Utils.getRatingFromAverage(item.voteAverage),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.tertiary,
+                        modifier = Modifier
+                            .background(Color.Transparent), // Background color to show the shadow clearly
+                    )
+
+                }
+            }
         }
     }
 }
@@ -228,8 +276,15 @@ fun ImageItem(item: Results) {
 @Composable
 fun ImageSlider(items: List<Results>) {
 
+    // Used Int.MAX_VALUE for infinity scroll
     val pageCount = items.size
-    val pagerState = rememberPagerState(pageCount = { pageCount })
+
+    // Init the PagerState with a very large number and make it always start from the first item of the real list
+    val pagerState = rememberPagerState(
+        pageCount = { pageCount },
+        initialPage = 0
+    )
+    val isDraggedState = pagerState.interactionSource.collectIsDraggedAsState()
 
     Box (
         contentAlignment = Alignment.BottomCenter,
@@ -240,11 +295,33 @@ fun ImageSlider(items: List<Results>) {
     ) {
 
         HorizontalPager(
-            state = pagerState
+            pageSize = PageSize.Fill,
+            state = pagerState,
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
         ) { page ->
             ImageItem(item = items[page])
         }
 
+        // Start auto-scroll effect
+        LaunchedEffect(isDraggedState) {
+            // convert compose state into flow
+            snapshotFlow { isDraggedState.value }
+                .collectLatest { isDragged ->
+                    // if not isDragged start slide animation
+                    if (!isDragged) {
+                        // infinity loop
+                        while (true) {
+                            // duration before each scroll animation
+                            delay(3_000L)
+                            runCatching {
+                                pagerState.animateScrollToPage(pagerState.currentPage.inc() % pagerState.pageCount)
+                            }
+                        }
+                    }
+                }
+        }
 
         Row(
             modifier = Modifier
@@ -274,8 +351,8 @@ fun ImageSlider(items: List<Results>) {
 
 
 
-//@Preview(showBackground = true)
-//@Composable
-//fun HomeScreenPreview() {
-//    HomeScreen()
-//}
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenPreview() {
+    Homepage()
+}
