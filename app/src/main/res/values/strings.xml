@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">ConnectedCinema</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="email_label">Email</string>
+    <string name="email_description_label">Please insert your email</string>
+    <string name="password_label">Password</string>
+    <string name="password_description_label">Please insert password</string>
+    <string name="hide_password">Hide password</string>
+    <string name="show_password">Show password</string>
+    <string name="forget_password">Forget password?</string>
+    <string name="i_understand">OK, I understand</string>
+
+    <string name="welcome_text">Please note that you can´t watch, stream or download shows and movies with this app.\n\nUse streaming apps to stream and watch content</string>
+
 </resources>
