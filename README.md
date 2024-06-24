@@ -12,4 +12,8 @@ API Min: 24
 Retrofit is a REST Client for Android and Java/Kotlin by Square. It makes it relatively easy to retrieve and upload JSON (or other structured data) via a REST-based web service. In Retrofit, you configure which converter is used for the data serialization.
 
 ## Screenshots
-![Launch screen](https://github.com/fmatos8/ConnectedCinema/assets/43448266/0b158502-5e66-4597-8bd9-9839da0cd7e3)
+### Splash Screen
+![Launch screen 2](https://github.com/fmatos8/ConnectedCinema/assets/43448266/696bc5ce-baa1-45b2-bce7-33a736ad068f)
+
+### Login
+![Sign in 2](https://github.com/fmatos8/ConnectedCinema/assets/43448266/262f1922-eabd-4d6f-b5aa-02e443fa6d3f)
