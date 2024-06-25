@@ -101,12 +101,11 @@ fun HomepageHorizontalList(items: List<Results>, label: String) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-
+            .padding(bottom = 20.dp),
     ) {
         Row (
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp, bottom = 5.dp),
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         )
         {
@@ -173,7 +172,7 @@ fun ShadowedImageCard(
                     brush = Brush.verticalGradient(
                         colors = listOf(
                             Color.Transparent,
-                            Color.Black.copy(alpha = 0.7f)
+                            MaterialTheme.colorScheme.secondary.copy(alpha = 0.7f)
                         ),
                         startY = 0.5f * 200.dp.value, // Start gradient at the middle
                         endY = 500.dp.value // End gradient at the bottom
@@ -200,34 +199,32 @@ fun ImageItem(item: Results) {
     Box {
         Image(
             painter = rememberImagePainter(
-                data = "https://image.tmdb.org/t/p/w500${item.posterPath}"
+                data = "https://image.tmdb.org/t/p/w500${item.backdropPath}"
             ),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp)
-                .clip(RoundedCornerShape(bottomEnd = 16.dp, bottomStart = 16.dp))
+                .height(250.dp)
         )
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .size(300.dp)
-                .clip(RoundedCornerShape(bottomEnd = 16.dp, bottomStart = 16.dp))
+                .size(250.dp)
                 .background(
                     brush = Brush.verticalGradient(
                         colors = listOf(
                             Color.Transparent,
-                            Color.Black.copy(alpha = 0.7f)
+                            MaterialTheme.colorScheme.secondary.copy(alpha = 1f)
                         ),
-                        startY = 0.7f, // Start gradient at the middle
-                        endY = 500.dp.value // End gradient at the bottom
+                        startY = 0.5f, // Start gradient at the middle
+                        endY = 600.dp.value // End gradient at the bottom
                     )
                 ),
             contentAlignment = Alignment.BottomStart
         ) {
             Column(
-                modifier = Modifier.padding(bottom = 80.dp)
+                modifier = Modifier.padding(bottom = 100.dp)
             ) {
                 Text(
                     text = item.title ?: item.name.toString(),
@@ -255,7 +252,7 @@ fun ImageItem(item: Results) {
                     Icon(
                         Icons.Filled.Star,
                         tint = MaterialTheme.colorScheme.tertiary,
-                        contentDescription = "Email",
+                        contentDescription = "",
                         modifier = Modifier.padding(start = 16.dp)
                     )
                     Text(
@@ -290,8 +287,7 @@ fun ImageSlider(items: List<Results>) {
         contentAlignment = Alignment.BottomCenter,
         modifier = Modifier
             .fillMaxWidth()
-            .height(300.dp)
-            .padding(bottom = 20.dp)
+            .height(250.dp)
     ) {
 
         HorizontalPager(
@@ -326,7 +322,7 @@ fun ImageSlider(items: List<Results>) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 30.dp),
+                .padding(bottom = 60.dp),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.Bottom
         ) {
@@ -339,7 +335,7 @@ fun ImageSlider(items: List<Results>) {
                         .padding(5.dp)
                         .clip(CircleShape)
                         .background(color)
-                        .size(10.dp)
+                        .size(7.dp)
                 ) {
 
                 }
