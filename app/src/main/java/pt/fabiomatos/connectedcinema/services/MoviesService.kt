@@ -1,17 +1,15 @@
 package pt.fabiomatos.connectedcinema.services
-import pt.fabiomatos.connectedcinema.models.ApiResponse
-import pt.fabiomatos.connectedcinema.models.Results
-import retrofit2.Call
+import pt.fabiomatos.connectedcinema.models.Response
 import retrofit2.http.GET
 
 interface MoviesService {
 
     @GET("movie/upcoming")
-    suspend fun getUpcoming(): ApiResponse
+    suspend fun getUpcoming(): Response
 
     @GET("trending/all/week")
-    suspend fun getTrending(): ApiResponse
+    suspend fun getTrending(): Response
 
     @GET("movie/top_rated")
-    suspend fun getTopRated(): ApiResponse
+    suspend fun getTopRated(): Response
 }

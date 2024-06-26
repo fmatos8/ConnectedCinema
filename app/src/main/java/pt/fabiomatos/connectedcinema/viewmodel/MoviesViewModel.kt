@@ -6,12 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import pt.fabiomatos.connectedcinema.models.ApiResponse
 import pt.fabiomatos.connectedcinema.models.Results
 import pt.fabiomatos.connectedcinema.repository.MovieRepository
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MoviesViewModel : ViewModel() {
 

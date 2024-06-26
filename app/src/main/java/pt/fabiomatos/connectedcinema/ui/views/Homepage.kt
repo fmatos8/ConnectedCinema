@@ -51,13 +51,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import pt.fabiomatos.connectedcinema.R
+import pt.fabiomatos.connectedcinema.ui.navigation.DetailsScreen
 import pt.fabiomatos.connectedcinema.ui.navigation.NavigationItem
 import pt.fabiomatos.connectedcinema.ui.theme.ConnectedCinemaTheme
+import pt.fabiomatos.connectedcinema.ui.views.screens.DetailsScreen
 import pt.fabiomatos.connectedcinema.ui.views.screens.FavoritesScreen
 import pt.fabiomatos.connectedcinema.ui.views.screens.HomeScreen
 import pt.fabiomatos.connectedcinema.ui.views.screens.MoreScreen
@@ -66,7 +70,7 @@ import pt.fabiomatos.connectedcinema.ui.views.screens.WhishlistScreen
 
 @Composable
 fun Homepage (){
-    val navController = rememberNavController()
+    val navController: NavHostController = rememberNavController()
     ConnectedCinemaTheme {
         Scaffold(
             bottomBar = { BottomNavigationBar(navController) },
@@ -89,20 +93,17 @@ fun HomepagePreview() {
 @Composable
 fun Navigation(navController: NavHostController) {
     NavHost(navController, startDestination = NavigationItem.Home.route) {
-        composable(NavigationItem.Home.route) {
-            HomeScreen()
-        }
-        composable(NavigationItem.Favorites.route) {
-            FavoritesScreen()
-        }
-        composable(NavigationItem.Search.route) {
-            SearchScreen()
-        }
-        composable(NavigationItem.Whishlist.route) {
-            WhishlistScreen()
-        }
-        composable(NavigationItem.More.route) {
-            MoreScreen()
+        composable(NavigationItem.Home.route) { HomeScreen(navController) }
+        composable(NavigationItem.Favorites.route) {FavoritesScreen() }
+        composable(NavigationItem.Search.route) {SearchScreen() }
+        composable(NavigationItem.Whishlist.route) { WhishlistScreen() }
+        composable(NavigationItem.More.route) { MoreScreen() }
+        composable(
+            "${DetailsScreen.route}/{movieId}",
+            arguments = listOf(navArgument("movieId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val movieId = backStackEntry.arguments?.getString("movieId")
+            DetailsScreen(movieId = movieId)
         }
     }
 }

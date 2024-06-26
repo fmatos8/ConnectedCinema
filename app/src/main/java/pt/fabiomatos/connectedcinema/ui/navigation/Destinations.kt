@@ -17,3 +17,7 @@ object Login: IDestinations {
 object Homepage: IDestinations {
     override val route = "Homepage"
 }
+
+object DetailsScreen: IDestinations {
+    override val route = "Details"
+}
