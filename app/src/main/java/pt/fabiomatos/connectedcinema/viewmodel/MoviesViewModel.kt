@@ -6,61 +6,31 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import pt.fabiomatos.connectedcinema.models.Movie
 import pt.fabiomatos.connectedcinema.models.Results
+import pt.fabiomatos.connectedcinema.repository.HomeRepository
 import pt.fabiomatos.connectedcinema.repository.MovieRepository
 
 class MoviesViewModel : ViewModel() {
 
     private val repository = MovieRepository()
 
-    private val _upcoming = MutableLiveData<List<Results>>()
-    private val _trending = MutableLiveData<List<Results>>()
-    private val _toprated = MutableLiveData<List<Results>>()
+    private val _details = MutableLiveData<Movie>()
+
+    val details: LiveData<Movie> get() = _details
 
 
-    val upcoming: LiveData<List<Results>> get() = _upcoming
-    val trending: LiveData<List<Results>> get() = _trending
-    val toprated: LiveData<List<Results>> get() = _toprated
-
-    init {
-        fetchTrending()
-        fetchUpcoming()
-        fetchTopRated()
-    }
-
-    private fun fetchTrending() {
+    internal fun fetchMovie(id: Int) {
         viewModelScope.launch {
             try {
-                val response = repository.getTrending()
-                _trending.value = response.results
-            } catch (e: Exception) {
-                Log.e("ERRO FETCH", e.toString())
-            }
-        }
-    }
+                val response = repository.getDetails(id)
+                _details.value = response
 
-    private fun fetchUpcoming() {
-        viewModelScope.launch {
-            try {
-                val response = repository.getUpcoming()
-                _upcoming.value = response.results
-            } catch (e: Exception) {
-                Log.e("ERRO FETCH", e.toString())
-            }
-        }
-    }
+                Log.e("TRENDING LIST -> ", _details.value!!.toString())
 
-    private fun fetchTopRated() {
-        viewModelScope.launch {
-            try {
-                val response = repository.getTopRated()
-                _toprated.value = response.results
             } catch (e: Exception) {
                 Log.e("ERRO FETCH", e.toString())
             }
         }
     }
 }
-
-
-

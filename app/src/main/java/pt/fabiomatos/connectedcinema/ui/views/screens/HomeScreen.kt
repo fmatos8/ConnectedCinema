@@ -1,7 +1,6 @@
 package pt.fabiomatos.connectedcinema.ui.views.screens
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -61,17 +60,16 @@ import coil.compose.rememberImagePainter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import pt.fabiomatos.connectedcinema.R
-import pt.fabiomatos.connectedcinema.interfaces.IDestinations
 import pt.fabiomatos.connectedcinema.models.Results
-import pt.fabiomatos.connectedcinema.ui.navigation.Welcome
 import pt.fabiomatos.connectedcinema.ui.theme.ConnectedCinemaTheme
 import pt.fabiomatos.connectedcinema.ui.views.Homepage
 import pt.fabiomatos.connectedcinema.utils.Utils
-import pt.fabiomatos.connectedcinema.viewmodel.MoviesViewModel
+import pt.fabiomatos.connectedcinema.viewmodel.HomeViewModel
 import pt.fabiomatos.connectedcinema.ui.navigation.DetailsScreen
+import pt.fabiomatos.connectedcinema.ui.navigation.NavigationItem
 
 @Composable
-fun HomeScreen(navController: NavHostController, viewModel: MoviesViewModel = viewModel()) {
+fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = viewModel()) {
 
 
     val trending by viewModel.trending.observeAsState()
@@ -297,8 +295,9 @@ fun ImageItem(item: Results, navController: NavHostController) {
     Box (
         modifier = Modifier
             .clickable {
-                navController.navigate(DetailsScreen.route + "/${item.id}")
-        }
+                navController.navigate("${DetailsScreen.route}/${item.mediaType}/${item.id}")
+                Log.e("CLICK TREND -> ", "")
+            }
     ) {
         Image(
             painter = rememberImagePainter(

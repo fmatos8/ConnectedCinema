@@ -1,6 +1,6 @@
 package pt.fabiomatos.connectedcinema.utils
 import okhttp3.OkHttpClient
-import pt.fabiomatos.connectedcinema.services.MoviesService
+import pt.fabiomatos.connectedcinema.services.CinemaService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -17,12 +17,12 @@ object RetrofitInstance {
         }
         .build()
 
-    val service: MoviesService by lazy {
+    val service: CinemaService by lazy {
         Retrofit.Builder()
             .baseUrl("https://api.themoviedb.org/3/")
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(MoviesService::class.java)
+            .create(CinemaService::class.java)
     }
 }

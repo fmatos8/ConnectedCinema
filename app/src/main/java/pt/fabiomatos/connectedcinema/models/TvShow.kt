@@ -1,4 +1,4 @@
-package com.example.example
+package pt.fabiomatos.connectedcinema
 
 import com.google.gson.annotations.SerializedName
 

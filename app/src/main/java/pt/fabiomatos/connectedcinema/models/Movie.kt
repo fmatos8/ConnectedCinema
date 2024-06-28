@@ -1,5 +1,10 @@
-package com.example.example
+package pt.fabiomatos.connectedcinema.models
 
+import pt.fabiomatos.connectedcinema.Collection
+import pt.fabiomatos.connectedcinema.Genres
+import pt.fabiomatos.connectedcinema.Languages
+import pt.fabiomatos.connectedcinema.ProductionCompanies
+import pt.fabiomatos.connectedcinema.ProductionCountries
 import com.google.gson.annotations.SerializedName
 
 

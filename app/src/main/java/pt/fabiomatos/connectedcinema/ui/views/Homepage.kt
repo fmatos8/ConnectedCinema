@@ -50,6 +50,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -99,11 +100,15 @@ fun Navigation(navController: NavHostController) {
         composable(NavigationItem.Whishlist.route) { WhishlistScreen() }
         composable(NavigationItem.More.route) { MoreScreen() }
         composable(
-            "${DetailsScreen.route}/{movieId}",
-            arguments = listOf(navArgument("movieId") { type = NavType.StringType })
+            "${DetailsScreen.route}/{mediaType}/{id}",
+            arguments = listOf(
+                navArgument("mediaType") { type = NavType.StringType },
+                navArgument("id") { type = NavType.IntType }
+            )
         ) { backStackEntry ->
-            val movieId = backStackEntry.arguments?.getString("movieId")
-            DetailsScreen(movieId = movieId)
+            val _mediaType = backStackEntry.arguments?.getString("mediaType")
+            val _id = backStackEntry.arguments?.getInt("id")
+            DetailsScreen(id = _id, mediaType = _mediaType, navController)
         }
     }
 }
