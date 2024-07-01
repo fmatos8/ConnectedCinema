@@ -34,7 +34,7 @@ class HomeViewModel : ViewModel() {
                 val response = repository.getTrending()
                 _trending.value = response.results
 
-                Log.e("TRENDING LIST -> ", _trending.value!!.size.toString())
+                Log.i("TRENDING LIST -> ", _trending.value!!.size.toString())
 
             } catch (e: Exception) {
                 Log.e("ERRO FETCH", e.toString())

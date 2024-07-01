@@ -89,11 +89,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = view
 
     val scrollState = rememberScrollState()
 
-    ConnectedCinemaTheme {
-        Surface (
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
+
             Column (
                 modifier = Modifier
                     .verticalScroll(state = scrollState)
@@ -114,8 +110,8 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = view
                 HomepageHorizontalList(upComing, stringResource(id = R.string.upcoming), navController)
                 HomepageHorizontalList(topRated, stringResource(id = R.string.top_rated), navController)
             }
-        }
-    }
+
+
 
 }
 
@@ -239,6 +235,10 @@ fun HomepageHorizontalList(items: List<Results>, label: String, navController: N
                     contentDescription = item.title.toString(),
                     modifier = Modifier
                         .size(120.dp, 180.dp)
+                        .clickable {
+                            navController.navigate("${DetailsScreen.route}/movie/${item.id}")
+                            Log.i("CLICK $label -> ", "")
+                        }
                 )
             }
         }
@@ -296,8 +296,8 @@ fun ImageItem(item: Results, navController: NavHostController) {
         modifier = Modifier
             .clickable {
                 navController.navigate("${DetailsScreen.route}/${item.mediaType}/${item.id}")
-                Log.e("CLICK TREND -> ", "")
-            }
+                Log.i("CLICK ITEM TREND -> ", "")
+        }
     ) {
         Image(
             painter = rememberImagePainter(
@@ -308,6 +308,7 @@ fun ImageItem(item: Results, navController: NavHostController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(250.dp)
+
         )
         Box(
             modifier = Modifier

@@ -16,6 +16,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.ArrowBackIosNew
+import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -71,23 +73,23 @@ fun DetailsScreen(
                 modifier = Modifier
                     .verticalScroll(state = scrollState)
             ) {
-                Log.e("ENTROU DetailsScreen -> ", "DetailsScreen")
+                Log.i("ENTROU DetailsScreen -> ", "DetailsScreen")
                 val _mediaType = MediaType.fromMediaType(mediaType!!)
                 when (_mediaType) {
                     MediaType.MOVIE -> {
-                        Log.e("ENTROU MOVIE -> ", "DetailsScreen")
+                        Log.i("ENTROU MOVIE -> ", "DetailsScreen")
                         DetailsMovie(id, viewModel, navController)
                     }
                     MediaType.TV -> {
-                        Log.e("ENTROU TV -> ", "DetailsTv")
+                        Log.i("ENTROU TV -> ", "DetailsTv")
                         DetailsTv(id)
                     }
                     MediaType.PEOPLE -> {
-                        Log.e("ENTROU PEOPLE -> ", "DetailsPeope")
+                        Log.i("ENTROU PEOPLE -> ", "DetailsPeope")
                         DetailsPeople(id)
                     }
                     else -> {
-                        Log.e("ENTROU else -> ", "DetailsScreen")
+                        Log.i("ENTROU else -> ", "DetailsScreen")
                         Toast.makeText(context, "Error!", Toast.LENGTH_SHORT).show()
                         navController.popBackStack()
                     }
@@ -103,17 +105,15 @@ fun DetailsMovie(
     movieId: Int?, viewModel: MoviesViewModel,
     navController: NavHostController) {
 
-    Log.e("ENTROU DETALHES -> ", "$movieId")
+    Log.i("ENTROU DETALHES -> ", "$movieId")
 
-    val movie by viewModel.details.observeAsState()
-    var isLoading by remember { mutableStateOf(true) }
-
-    viewModel.fetchMovie(movieId!!)
-
-    LaunchedEffect(movie) {
-        isLoading = false
-        Log.e("ENTROU LaunchedEffect -> ", "$movieId")
+    LaunchedEffect(movieId) {
+        viewModel.fetchMovie(movieId!!)
+        Log.i("ENTROU LaunchedEffect -> ", "$movieId")
     }
+
+    val movie by viewModel.detailsData
+    val isLoading by viewModel.isLoading
 
     Box(
         contentAlignment = Alignment.Center,
@@ -134,29 +134,30 @@ fun DetailsMovie(
 @Composable
 fun DetailsTv(tvId: Int?) {
 
-    Log.d("DETAILS PAGE -> ", tvId.toString())
+    Log.i("DETAILS PAGE -> ", tvId.toString())
 }
 
 @Composable
 fun DetailsPeople(peopleId: Int?) {
 
-    Log.d("DETAILS PAGE -> ", peopleId.toString())
+    Log.i("DETAILS PAGE -> ", peopleId.toString())
 }
 
 @Composable
 fun TopScreen(item: Movie, navController: NavHostController) {
     Box {
         Image(
-//            painter = rememberImagePainter(
-//                data = "https://image.tmdb.org/t/p/w500${item.backdropPath}"
-//            ),
-            painter = painterResource(id = R.drawable.cover),
+            painter = rememberImagePainter(
+                data = "https://image.tmdb.org/t/p/w500${item.backdropPath}"
+            ),
+            //painter = painterResource(id = R.drawable.cover),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(400.dp)
         )
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()

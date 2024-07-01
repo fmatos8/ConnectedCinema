@@ -25,7 +25,10 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -72,18 +75,39 @@ import pt.fabiomatos.connectedcinema.ui.views.screens.WhishlistScreen
 @Composable
 fun Homepage (){
     val navController: NavHostController = rememberNavController()
-    ConnectedCinemaTheme {
+    val bottomBarState = remember { mutableStateOf(true) }
+
+    val items = listOf(
+        NavigationItem.Home,
+        NavigationItem.Favorites,
+        NavigationItem.Search,
+        NavigationItem.Whishlist,
+        NavigationItem.More
+    )
+
+    Surface(color = Color.Transparent) {
         Scaffold(
-            bottomBar = { BottomNavigationBar(navController) },
+            bottomBar = {
+                if (bottomBarState.value) {
+                    BottomNavigationBar(items, navController)
+                }
+            },
             content = { padding ->
                 Box(modifier = Modifier.padding(padding)) {
                     Navigation(navController = navController)
                 }
-            },
-            containerColor = MaterialTheme.colorScheme.background
+
+                navController.addOnDestinationChangedListener { _, destination, _ ->
+                    val found = items.any { item ->
+                        destination.route == item.route
+                    }
+                    bottomBarState.value = found
+                }
+            }
         )
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
@@ -115,14 +139,8 @@ fun Navigation(navController: NavHostController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomNavigationBar(navController: NavController) {
-    val items = listOf(
-        NavigationItem.Home,
-        NavigationItem.Favorites,
-        NavigationItem.Search,
-        NavigationItem.Whishlist,
-        NavigationItem.More
-    )
+fun BottomNavigationBar(items: List<NavigationItem>, navController: NavController) {
+
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.background
     ) {
